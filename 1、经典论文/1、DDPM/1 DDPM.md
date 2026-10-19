@@ -4,7 +4,7 @@
 贡献：
 - 展示了DDPM和SM（Score Matching）之间的关系。
 - 
-啊
+啊啊啊
 啊
 啊
 
