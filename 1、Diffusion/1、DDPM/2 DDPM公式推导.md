@@ -39,7 +39,7 @@ $=\int q(x_{1:T} | x_0) \frac{p(x_{0:T})}{q(x_{1:T} | x_0)}dx_{1:T}$
 
 $=\int q(x_{1:T} | x_0)p(x_T)\prod_{t=1}^{T}\frac{p(x_{t-1}|x_{t})}{q(x_t|x_{t-1})}dx_{1:T}$
 
-从而损失函数：
+从而损失函数： 
 
 $L=\int q(x_0)logp(x_0)dx_0$ （来自Deep Unsupervised Learning using Nonequilibrium Thermodynamics. 2015，个人理解就是交叉熵）（其中：q(x)为前向过程相关概率函数，即现实世界中的真实数据分布，p(x)为逆向过程相关概率函数，即估计分布）
 
