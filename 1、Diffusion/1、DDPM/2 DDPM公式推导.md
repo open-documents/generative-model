@@ -19,7 +19,8 @@ $$
 进而，有
 $$
 \begin{aligned}
-q(x_{0:T}) / q(x_0) = \prod_{t=1}^{T}q(x_t|x_{t-1})  
+q(x_{0:T}) / q(x_0) &= \prod_{t=1}^{T}q(x_t|x_{t-1})                   \\
+\Rightarrow q(x_{1:T}|x_0) &= \prod_{t=1}^{T}q(x_t|x_{t-1})
 \end{aligned}
 $$
 
