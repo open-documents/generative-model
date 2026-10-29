@@ -6,17 +6,22 @@
 
 $$
 \begin{aligned}
-q(x_{0:T})                                                                              
-&= q(x_{1:T}|x_0) \cdot q(x_0)                                             \\
+q(x_{0:T})                                                                                
+&=q(x_{1:T}|x_0) \cdot q(x_0)                                              \\
 &=q(x_{2:T}|x_0,x_1) \cdot q(x_1|x_0) \cdot q(x_0)              \\
 & \  ...                                                                                   \\
-&=q(x_0) \cdot q(x_1|x_0) \cdot q(x_2|x_0,x_1) \cdot q(x_3|x_0,x_1,x_2)...q(x_T|x_{0:T-1})                    \\ 
-&=q(x_0) \cdot q(x_1|x_0) \cdot q(x_2|x_1) \cdot q(x_3|x_2)...q(x_{T-1}|x_{T-2}) \cdot q(x_T|x_{T-1})    \\
+&=q(x_T|x_{0:T-1}) \cdot q(x_{T-1}|x_{0:T-2}) \ ... q(x_2|x_1, x_0) \cdot q(x_1|x_0) \cdot q(x_0)   \\ 
+&=q(x_T|x_{T-1}) \cdot q(x_{T-1}|x_{T-2}) \ ... \ q(x_2|x_1) \cdot q(x_1|x_0) \cdot q(x_0)              \\
 &=q(x_0)\prod_{t=1}^{T}q(x_t|x_{t-1})
 \end{aligned}
 $$
 
 进而，有
+$$
+\begin{aligned}
+q(x_{0:T}) / q(x_0) = \prod_{t=1}^{T}q(x_t|x_{t-1})  
+\end{aligned}
+$$
 
 逆向（去噪）过程：$p(x_{0:T})$
 $=p(x_{0:T-1}|x_T) \cdot p(x_T)$ 
