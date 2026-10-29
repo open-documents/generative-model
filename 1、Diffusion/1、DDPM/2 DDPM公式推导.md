@@ -8,8 +8,8 @@ q(x_{0:T})
 &= q(x_{1:T}|x_0) \cdot q(x_0)                                              \\
 &= q(x_{2:T}|x_0,x_1) \cdot q(x_1|x_0) \cdot q(x_0)              \\
 & \  ...                                                                                   \\
-&= q(x_T|x_{0:T-1}) \cdot q(x_{T-1}|x_{0:T-2}) \ ... q(x_2|x_1, x_0) \cdot q(x_1|x_0) \cdot q(x_0)   \\ 
-&= q(x_T|x_{T-1}) \cdot q(x_{T-1}|x_{T-2}) \ ... \ q(x_2|x_1) \cdot q(x_1|x_0) \cdot q(x_0)              \\
+&= q(x_T|x_{0:T-1}) \cdot q(x_{T-1}|x_{0:T-2}) \ ... q(x_2|x_1, x_0) \cdot q(x_1|x_0) \cdot q(x_0)                                               \\ 
+&= q(x_T|x_{T-1}) \cdot q(x_{T-1}|x_{T-2}) \ ... \ q(x_2|x_1) \cdot q(x_1|x_0) \cdot q(x_0)            \ \ \ \ \ \ \ \ \ \ \ \ （前向马尔可夫）  \\
 &= q(x_0)\prod_{t=1}^{T}q(x_t|x_{t-1})
 \end{aligned}
 $$
@@ -30,29 +30,11 @@ p(x_{0:T})                                                                      
 &= p(x_{0:T-2}|x_{T-1},x_{T}) \cdot p(x_{T-1}|x_T) \cdot p(x_T)      \nonumber      \\
 & \ ...                  \nonumber     \\
 &= p(x_0|x_{1:T}) \cdot p(x_1|x_{2:T}) \cdot p(x_2|x_{3:T})...p(x_{T-1}|x_T) \cdot p(x_T)                           \nonumber    \\
-& =p(x_0|x_1) \cdot p(x_1|x_2) \cdot p(x_2|x_3)...p(x_{T-2}|x_{T-1}) \cdot p(x_{T-1}|x_T) \cdot p(x_T)     \nonumber    \\
-& =p(x_T)\prod_{t=1}^{T}p(x_{t-1}|x_{t})
+&= p(x_0|x_1) \cdot p(x_1|x_2) \cdot p(x_2|x_3)...p(x_{T-2}|x_{T-1}) \cdot p(x_{T-1}|x_T) \cdot p(x_T)  \ \ \ （逆向马尔可夫）    \nonumber    \\
+&= p(x_T)\prod_{t=1}^{T}p(x_{t-1}|x_{t})
 \end{align}
 $$
 
-$=p(x_{0:T-1}|x_T) \cdot p(x_T)$ 
-$=p(x_{0:T-2}|x_{T-1},x_{T}) \cdot p(x_{T-1}|x_T) \cdot p(x_T)$
-$...$
-$=p(x_0|x_{1:T}) \cdot p(x_1|x_{2:T}) \cdot p(x_2|x_{3:T})...p(x_{T-1}|x_T) \cdot p(x_T)$
-由于逆向过程假设为马尔可夫（Markov）过程，因此有 $p(x_t|x_{t+1}) = p(x_t|x_{t+1},x_{t+2},...,x_T)$，
-$=p(x_0|x_1) \cdot p(x_1|x_2) \cdot p(x_2|x_3)...p(x_{T-2}|x_{T-1}) \cdot p(x_{T-1}|x_T) \cdot p(x_T)$
-$=p(x_T)\prod_{t=1}^{T}p(x_{t-1}|x_{t})$
-
-$$
-\begin{aligned}
-q(x_{0:T}) &= q(x_{1:T}|x_0)\cdot q(x_0) \\
-&\overset{\text{由马尔可夫性}}{=} q(x_{2:T}|x_0,x_1)\cdot q(x_1|x_0)\cdot q(x_0) \\
-&\overset{\text{同理}}{=} \cdots \\
-&\overset{\text{展开}}{=} q(x_T|x_{0:T-1})\cdot q(x_{T-1}|x_{0:T-2}) \cdots q(x_2|x_1,x_0)\cdot q(x_1|x_0)\cdot q(x_0) \\
-&\overset{\text{约去}}{=} q(x_T|x_{T-1})\cdot q(x_{T-1}|x_{T-2}) \cdots q(x_2|x_1)\cdot q(x_1|x_0)\cdot q(x_0) \\
-&\overset{\text{定义}}{=} q(x_0)\prod_{t=1}^{T}q(x_t|x_{t-1})
-\end{aligned}
-$$
 
 
 # 损失函数的推导
@@ -61,11 +43,8 @@ $$
 对估计的分布进行变换以方便建模。根据全概率公式：
 
 $p(x_0)=\int p(x_{0:T})dx_{1:T}$
-
 $=\int p(x_{0:T}) \frac{q(x_{1:T} | x_0)}{q(x_{1:T} | x_0)}dx_{1:T}$          
-
 $=\int q(x_{1:T} | x_0) \frac{p(x_{0:T})}{q(x_{1:T} | x_0)}dx_{1:T}$  
-
 $=\int q(x_{1:T} | x_0)p(x_T)\prod_{t=1}^{T}\frac{p(x_{t-1}|x_{t})}{q(x_t|x_{t-1})}dx_{1:T}$
 
 从而损失函数： 
