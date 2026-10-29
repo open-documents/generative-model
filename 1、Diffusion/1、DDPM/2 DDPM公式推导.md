@@ -2,29 +2,39 @@
 现实中的分布：$q(x_0)$（
 
 前向过程：$q(x_{0:T})$
-
-
 $$
 \begin{aligned}
 q(x_{0:T})                                                                                
-&=q(x_{1:T}|x_0) \cdot q(x_0)                                              \\
-&=q(x_{2:T}|x_0,x_1) \cdot q(x_1|x_0) \cdot q(x_0)              \\
+&= q(x_{1:T}|x_0) \cdot q(x_0)                                              \\
+&= q(x_{2:T}|x_0,x_1) \cdot q(x_1|x_0) \cdot q(x_0)              \\
 & \  ...                                                                                   \\
-&=q(x_T|x_{0:T-1}) \cdot q(x_{T-1}|x_{0:T-2}) \ ... q(x_2|x_1, x_0) \cdot q(x_1|x_0) \cdot q(x_0)   \\ 
-&=q(x_T|x_{T-1}) \cdot q(x_{T-1}|x_{T-2}) \ ... \ q(x_2|x_1) \cdot q(x_1|x_0) \cdot q(x_0)              \\
-&=q(x_0)\prod_{t=1}^{T}q(x_t|x_{t-1})
+&= q(x_T|x_{0:T-1}) \cdot q(x_{T-1}|x_{0:T-2}) \ ... q(x_2|x_1, x_0) \cdot q(x_1|x_0) \cdot q(x_0)   \\ 
+&= q(x_T|x_{T-1}) \cdot q(x_{T-1}|x_{T-2}) \ ... \ q(x_2|x_1) \cdot q(x_1|x_0) \cdot q(x_0)              \\
+&= q(x_0)\prod_{t=1}^{T}q(x_t|x_{t-1})
 \end{aligned}
 $$
-
 进而，有
 $$
-\begin{aligned}
-q(x_{0:T}) / q(x_0) &= \prod_{t=1}^{T}q(x_t|x_{t-1})                   \\
-\Rightarrow q(x_{1:T}|x_0) &= \prod_{t=1}^{T}q(x_t|x_{t-1})
-\end{aligned}
+\begin{align}
+q(x_{0:T}) / q(x_0) &= \prod_{t=1}^{T}q(x_t|x_{t-1})            \nonumber         \\
+\Rightarrow \ \ \ \ q(x_{1:T}|x_0) &= \prod_{t=1}^{T}q(x_t|x_{t-1})
+\end{align}
 $$
 
 逆向（去噪）过程：$p(x_{0:T})$
+
+$$
+\begin{align}
+p(x_{0:T})                                                                                       \nonumber
+&= p(x_{0:T-1}|x_T) \cdot p(x_T)                                                   \nonumber      \\
+&= p(x_{0:T-2}|x_{T-1},x_{T}) \cdot p(x_{T-1}|x_T) \cdot p(x_T)      \nonumber      \\
+& \ ...                  \nonumber     \\
+&= p(x_0|x_{1:T}) \cdot p(x_1|x_{2:T}) \cdot p(x_2|x_{3:T})...p(x_{T-1}|x_T) \cdot p(x_T)                           \nonumber    \\
+& =p(x_0|x_1) \cdot p(x_1|x_2) \cdot p(x_2|x_3)...p(x_{T-2}|x_{T-1}) \cdot p(x_{T-1}|x_T) \cdot p(x_T)     \nonumber    \\
+& =p(x_T)\prod_{t=1}^{T}p(x_{t-1}|x_{t})
+\end{align}
+$$
+
 $=p(x_{0:T-1}|x_T) \cdot p(x_T)$ 
 $=p(x_{0:T-2}|x_{T-1},x_{T}) \cdot p(x_{T-1}|x_T) \cdot p(x_T)$
 $...$
@@ -32,6 +42,17 @@ $=p(x_0|x_{1:T}) \cdot p(x_1|x_{2:T}) \cdot p(x_2|x_{3:T})...p(x_{T-1}|x_T) \cdo
 由于逆向过程假设为马尔可夫（Markov）过程，因此有 $p(x_t|x_{t+1}) = p(x_t|x_{t+1},x_{t+2},...,x_T)$，
 $=p(x_0|x_1) \cdot p(x_1|x_2) \cdot p(x_2|x_3)...p(x_{T-2}|x_{T-1}) \cdot p(x_{T-1}|x_T) \cdot p(x_T)$
 $=p(x_T)\prod_{t=1}^{T}p(x_{t-1}|x_{t})$
+
+$$
+\begin{aligned}
+q(x_{0:T}) &= q(x_{1:T}|x_0)\cdot q(x_0) \\
+&\overset{\text{由马尔可夫性}}{=} q(x_{2:T}|x_0,x_1)\cdot q(x_1|x_0)\cdot q(x_0) \\
+&\overset{\text{同理}}{=} \cdots \\
+&\overset{\text{展开}}{=} q(x_T|x_{0:T-1})\cdot q(x_{T-1}|x_{0:T-2}) \cdots q(x_2|x_1,x_0)\cdot q(x_1|x_0)\cdot q(x_0) \\
+&\overset{\text{约去}}{=} q(x_T|x_{T-1})\cdot q(x_{T-1}|x_{T-2}) \cdots q(x_2|x_1)\cdot q(x_1|x_0)\cdot q(x_0) \\
+&\overset{\text{定义}}{=} q(x_0)\prod_{t=1}^{T}q(x_t|x_{t-1})
+\end{aligned}
+$$
 
 
 # 损失函数的推导
