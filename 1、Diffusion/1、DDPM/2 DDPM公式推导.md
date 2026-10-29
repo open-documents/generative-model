@@ -2,17 +2,21 @@
 现实中的分布：$q(x_0)$（
 
 前向过程：$q(x_{0:T})$
-$=q(x_{1:T}|x_0) \cdot q(x_0)$ 
-$=q(x_{2:T}|x_0,x_1) \cdot q(x_1|x_0) \cdot q(x_0)$
-$...$
-$=q(x_0) \cdot q(x_1|x_0) \cdot q(x_2|x_0,x_1) \cdot q(x_3|x_0,x_1,x_2)...q(x_T|x_{0:T-1})$
-
-由于前向过程假设为马尔可夫（Markov）过程，因此有$q(x_t|x_{t-1}) = q(x_t|x_{t-1},x_{t-2},...,x_0)$，
-
-$=q(x_0) \cdot q(x_1|x_0) \cdot q(x_2|x_1) \cdot q(x_3|x_2)...q(x_{T-1}|x_{T-2}) \cdot q(x_T|x_{T-1})$
-$=q(x_0)\prod_{t=1}^{T}q(x_t|x_{t-1})$
 
 
+$$
+\begin{aligned}
+q(x_{0:T})                                                                              
+&= q(x_{1:T}|x_0) \cdot q(x_0)                                             \\
+&=q(x_{2:T}|x_0,x_1) \cdot q(x_1|x_0) \cdot q(x_0)              \\
+& \  ...                                                                                   \\
+&=q(x_0) \cdot q(x_1|x_0) \cdot q(x_2|x_0,x_1) \cdot q(x_3|x_0,x_1,x_2)...q(x_T|x_{0:T-1})                    \\ 
+&=q(x_0) \cdot q(x_1|x_0) \cdot q(x_2|x_1) \cdot q(x_3|x_2)...q(x_{T-1}|x_{T-2}) \cdot q(x_T|x_{T-1})    \\
+&=q(x_0)\prod_{t=1}^{T}q(x_t|x_{t-1})
+\end{aligned}
+$$
+
+进而，有
 
 逆向（去噪）过程：$p(x_{0:T})$
 $=p(x_{0:T-1}|x_T) \cdot p(x_T)$ 
@@ -46,7 +50,7 @@ $=\int q(x_0) \cdot log[\int q(x_{1:T} | x_0)p(x_T) \cdot \prod_{t=1}^{T}\frac{p
 $\geq \int q(x_{0:T})\cdot log[p(x_T)\frac{p(x_{t-1}|x_{t})}{q(x_t|x_{t-1})}]d(x_{0:T}) = K$ 
 
 从而目标函数可以变为优化
-
+ &= 
 $K=E_{q(x_{0:T})}[ - \sum_{t=1}log(\frac{p(x_{t-1}|x_{t})}{q(x_t|x_{t-1})})-logp(x_T)]$
 
 $=E_{q(x_{0:T})}[-log(\frac{p(x_0|x_1)}{q(x_1|x_0)})  - \sum_{t=2}log(\frac{p(x_{t-1}|x_{t})}{q(x_t|x_{t-1})})-logp(x_T)]$
