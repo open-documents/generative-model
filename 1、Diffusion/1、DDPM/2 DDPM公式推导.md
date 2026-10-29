@@ -19,9 +19,7 @@ $=p(x_{0:T-1}|x_T) \cdot p(x_T)$
 $=p(x_{0:T-2}|x_{T-1},x_{T}) \cdot p(x_{T-1}|x_T) \cdot p(x_T)$
 $...$
 $=p(x_0|x_{1:T}) \cdot p(x_1|x_{2:T}) \cdot p(x_2|x_{3:T})...p(x_{T-1}|x_T) \cdot p(x_T)$
-
 由于逆向过程假设为马尔可夫（Markov）过程，因此有 $p(x_t|x_{t+1}) = p(x_t|x_{t+1},x_{t+2},...,x_T)$，
-
 $=p(x_0|x_1) \cdot p(x_1|x_2) \cdot p(x_2|x_3)...p(x_{T-2}|x_{T-1}) \cdot p(x_{T-1}|x_T) \cdot p(x_T)$
 $=p(x_T)\prod_{t=1}^{T}p(x_{t-1}|x_{t})$
 
