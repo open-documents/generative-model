@@ -22,7 +22,6 @@ q(x_{0:T}) / q(x_0) &= \prod_{t=1}^{T}q(x_t|x_{t-1})            \nonumber       
 $$
 
 逆向（去噪）过程：$p(x_{0:T})$
-
 $$
 \begin{align}
 p(x_{0:T})                                                                                       \nonumber
@@ -34,19 +33,19 @@ p(x_{0:T})                                                                      
 &= p(x_T)\prod_{t=1}^{T}p(x_{t-1}|x_{t})
 \end{align}
 $$
-
-
-
 # 损失函数的推导
 
 
 对估计的分布进行变换以方便建模。根据全概率公式：
-
-$p(x_0)=\int p(x_{0:T})dx_{1:T}$
-$=\int p(x_{0:T}) \frac{q(x_{1:T} | x_0)}{q(x_{1:T} | x_0)}dx_{1:T}$          
-$=\int q(x_{1:T} | x_0) \frac{p(x_{0:T})}{q(x_{1:T} | x_0)}dx_{1:T}$  
-$=\int q(x_{1:T} | x_0)p(x_T)\prod_{t=1}^{T}\frac{p(x_{t-1}|x_{t})}{q(x_t|x_{t-1})}dx_{1:T}$
-
+$$
+\begin{aligned}
+p(x_0)                              
+&= \int p(x_{0:T})dx_{1:T}                                                               \\
+&= \int p(x_{0:T}) \frac{q(x_{1:T} | x_0)}{q(x_{1:T} | x_0)}dx_{1:T}      \\
+&= \int q(x_{1:T} | x_0) \frac{p(x_{0:T})}{q(x_{1:T} | x_0)}dx_{1:T}      \\
+&= \int q(x_{1:T} | x_0)p(x_T)\prod_{t=1}^{T}\frac{p(x_{t-1}|x_{t})}{q(x_t|x_{t-1})}dx_{1:T}
+\end{aligned}
+$$
 从而损失函数： 
 
 $L=\int q(x_0)logp(x_0)dx_0$ （来自Deep Unsupervised Learning using Nonequilibrium Thermodynamics. 2015，个人理解就是交叉熵）（其中：q(x)为前向过程相关概率函数，即现实世界中的真实数据分布，p(x)为逆向过程相关概率函数，即估计分布）
